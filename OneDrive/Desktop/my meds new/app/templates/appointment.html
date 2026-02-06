@@ -1,0 +1,153 @@
+{% extends "mymeds.html" %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2 class="fw-bold"><i class="bi bi-calendar-check me-2 text-info"></i>Appointments</h2>
+        <p class="text-muted">Manage your medical visits</p>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addApptModal">
+            <i class="bi bi-plus-lg me-1"></i> Book Appointment
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Upcoming Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom-0 pb-0">
+                <h5 class="text-primary fw-bold mb-0">Upcoming</h5>
+            </div>
+            <div class="card-body">
+                {% if upcoming %}
+                <div class="list-group list-group-flush">
+                    {% for appt in upcoming %}
+                    <div class="list-group-item border-0 px-0 py-3">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-3 text-center" style="min-width: 60px;">
+                                    <h5 class="mb-0 fw-bold">{{ appt.appointment_datetime.strftime('%d') }}</h5>
+                                    <small class="text-muted text-uppercase" style="font-size: 0.7rem;">{{
+                                        appt.appointment_datetime.strftime('%b') }}</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-bold">{{ appt.title }}</h6>
+                                    <small class="text-muted"><i class="bi bi-clock me-1"></i>{{
+                                        appt.appointment_datetime.strftime('%H:%M') }}</small>
+                                    {% if appt.description %}
+                                    <p class="mb-0 small text-muted mt-1">{{ appt.description }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <button class="btn btn-icon btn-sm text-danger delete-btn" data-id="{{ appt.id }}"
+                                title="Cancel">
+                                <i class="bi bi-x-circle-fill" style="font-size: 1.2rem;"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-calendar-x text-muted" style="font-size: 2rem;"></i>
+                    <p class="text-muted mt-2">No upcoming appointments.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Past Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm opacity-75">
+            <div class="card-header bg-white border-bottom-0 pb-0">
+                <h5 class="text-muted fw-bold mb-0">History</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    {% for appt in past %}
+                    <div class="list-group-item border-0 px-0 py-2">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1 text-muted">{{ appt.title }}</h6>
+                            <small class="text-muted">{{ appt.appointment_datetime.strftime('%Y-%m-%d') }}</small>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="text-muted small mt-2">No past appointments.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addApptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Book New Appointment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="addApptForm">
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">TITLE</label>
+                        <input type="text" class="form-control" name="title" placeholder="Ex: Dentist Checkup" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">DATE & TIME</label>
+                        <input type="datetime-local" class="form-control" name="datetime" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">DESCRIPTION</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary px-4" id="saveAppt">Book Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('saveAppt').addEventListener('click', function () {
+        const form = document.getElementById('addApptForm');
+        const formData = new FormData(form);
+
+        const data = {
+            title: formData.get('title'),
+            datetime: formData.get('datetime'),
+            description: formData.get('description')
+        };
+
+        fetch('/api/appointments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(async res => {
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Error booking appointment');
+                }
+            });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            if (!confirm('Cancel this appointment?')) return;
+            const id = this.dataset.id;
+            fetch(`/api/appointments/${id}`, { method: 'DELETE' })
+                .then(() => location.reload());
+        });
+    });
+</script>
+{% endblock %}

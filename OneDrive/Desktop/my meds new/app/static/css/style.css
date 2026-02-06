@@ -1,0 +1,157 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #10b981;
+    --secondary-color: #06b6d4;
+    --accent-color: #059669;
+    --text-primary: #374151;
+    --text-secondary: #718096;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    background-color: #f0fdf4;
+    /* Premium Mesh Gradient Background */
+    background-image:
+        radial-gradient(at 40% 20%, rgb(65, 188, 110) 0px, transparent 50%),
+        radial-gradient(at 80% 0%, rgb(65, 101, 62) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, rgb(149, 178, 150) 0px, transparent 50%),
+        radial-gradient(at 80% 50%, rgb(118, 174, 204) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgb(156, 139, 92) 0px, transparent 50%),
+        radial-gradient(at 80% 100%, hsla(240, 100%, 96%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(343, 100%, 96%, 1) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+/* Navbar: Glassmorphism */
+.navbar {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #4a5568 !important;
+    transition: color 0.2s;
+    border-radius: 8px;
+    padding: 0.5rem 1rem !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #10b981 !important;
+    background: rgba(100, 236, 122, 0.25);
+}
+
+.btn-outline-light {
+    color: #10b981;
+    border-color: #d1fae5;
+}
+
+.btn-outline-light:hover {
+    background: #10b981;
+    color: white;
+}
+
+/* Glass Cards */
+.card,
+.auth-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #11fa05 100%);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(100, 236, 122, 0.25);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(100, 236, 122, 0.25);
+}
+
+/* Auth Pages */
+.auth-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card h3 {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.form-control {
+    background: rgba(100, 236, 122, 0.25);
+    border: 1px solid #d1fae5;
+    border-radius: 10px;
+    padding: 0.8rem;
+}
+
+.form-control:focus {
+    background: #f0fdf4;
+    box-shadow: 0 0 0 3px rgba(100, 236, 122, 0.25);
+    border-color: #d1fae5;
+}
+
+/* Chatbot */
+.chat-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.chat-message-user {
+    background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    color: white;
+    border-radius: 15px 15px 2px 15px;
+}
+
+.chat-message-bot {
+    background: #f0fdf4;
+    color: var(--text-primary);
+    border-radius: 15px 15px 15px 2px;
+    border: 1px solid #d1fae5;
+}

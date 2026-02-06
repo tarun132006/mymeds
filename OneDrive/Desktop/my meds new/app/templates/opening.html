@@ -1,0 +1,100 @@
+{% extends "mymeds.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="row min-vh-75 align-items-center mb-5">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="display-3 fw-bold mb-4"
+                style="background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Your Health, <br>In Your Hands.
+            </h1>
+            <p class="lead text-secondary mb-5">
+                Experience the future of personal health management. MyMeds combines smart medication tracking, easy
+                appointment scheduling, and our very own AI-powered support Medusa in one secure platform.
+            </p>
+            <div class="d-flex gap-3">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 shadow-lg rounded-pill">Get
+                    Started For Free</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary btn-lg px-4 rounded-pill">Sign
+                    In</a>
+            </div>
+
+            <div class="mt-5 d-flex gap-4 text-secondary">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-2">
+                        <i class="bi bi-shield-check fs-5 text-primary"></i>
+                    </div>
+                    <span>HIPAA Ready</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-2">
+                        <i class="bi bi-bell fs-5 text-primary"></i>
+                    </div>
+                    <span>Smart Alerts</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 text-center">
+            <div class="position-relative">
+                <div class="position-absolute top-50 start-50 translate-middle"
+                    style="width: 450px; height: 450px; background: radial-gradient(circle, rgba(80, 129, 105, 0.1) 0%, rgba(118,75,162,0.05) 70%); border-radius: 50%; z-index: -1;">
+                </div>
+                <img src="{{ url_for('static', filename='img/landing.png') }}" alt="Healthcare Illustration"
+                    class="img-fluid"
+                    style="filter: drop-shadow(0 20px 40px rgba(102,126,234,0.2)); max-height: 500px; transform: scale(1.02);">
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row g-4 py-5">
+        <div class="col-12 text-center mb-5">
+            <h2 class="fw-bold section-title">Why Choose MyMeds ?</h2>
+            <p class="text-muted">Everything you need to manage your well-being is here</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-hover p-4 text-center bg-white" style="border-radius: 20px;">
+                <div class="mx-auto mb-3 bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 70px; height: 70px;">
+                    <i class="bi bi-capsule fs-2 text-primary"></i>
+                </div>
+                <h5 class="fw-bold">Medication Tracker</h5>
+                <p class="text-muted small">Never miss a dose again. Get timely reminders and track your adherence
+                    history effortlessly.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-hover p-4 text-center bg-white" style="border-radius: 20px;">
+                <div class="mx-auto mb-3 bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 70px; height: 70px;">
+                    <i class="bi bi-calendar-event fs-2 text-success"></i>
+                </div>
+                <h5 class="fw-bold">Easy Scheduling</h5>
+                <p class="text-muted small">Book appointments instantly. Our smart system prevents conflicts and keeps
+                    you organized.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-hover p-4 text-center bg-white" style="border-radius: 20px;">
+                <div class="mx-auto mb-3 bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 70px; height: 70px;">
+                    <i class="bi bi-hexagon-fill fs-2 text-info"></i>
+                </div>
+                <h5 class="fw-bold">24/7 AI Support</h5>
+                <p class="text-muted small">Get instant answers and emotional support and app instructions from our advanced AI assistant
+                    anytime, anywhere.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-5 text-center text-muted small py-4 border-top">
+    <p class="mb-0">&copy; 2026 MyMeds. All rights reserved.</p>
+    <p class="mb-0 fw-bold text-primary">Project Developer: Team 12-RVR and JC</p>
+</footer>
+</div>
+{% endblock %}

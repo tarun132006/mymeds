@@ -1,0 +1,96 @@
+{% extends "mymeds.html" %}
+
+{% block content %}
+<div class="row mb-5">
+    <div class="col-md-12">
+        <div class="p-4 rounded-3 text-white bg-sucess" style="background: var(--secondary-gradient);">
+            <h1>Welcome back, {{ user.name }}!</h1>
+            <p class="lead mb-0">Here's your health overview for today.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Quick Actions Cards -->
+    <div class="col-md-4">
+        <a href="{{ url_for('medicines.index') }}" class="text-decoration-none">
+            <div class="card h-100 text-center p-3">
+                <div class="card-body">
+                    <div class="display-4 text-primary mb-3"><i class="bi bi-capsule"></i></div>
+                    <h5 class="card-title text-dark">Medicines</h5>
+                    <p class="card-text text-muted">Manage your prescriptions and log doses.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{{ url_for('appointments.index') }}" class="text-decoration-none">
+            <div class="card h-100 text-center p-3">
+                <div class="card-body">
+                    <div class="display-4 text-info mb-3"><i class="bi bi-calendar-check"></i></div>
+                    <h5 class="card-title text-dark">Appointments</h5>
+                    <p class="card-text text-muted">View upcoming checkups and book new ones.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{{ url_for('chatbot.chat_ui') }}" class="text-decoration-none">
+            <div class="card h-100 text-center p-3">
+                <div class="card-body">
+                    <div class="display-4 text-success mb-3"><i class="bi bi-hexagon-fill me-2"></i></div>
+                    <h5 class="card-title text-dark">Medusa</h5>
+                    <p class="card-text text-muted">Chat for support and mood tracking.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-white border-0">
+                <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Adherence Overview</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="adherenceChart" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('/api/medicines')
+        .then(res => res.json())
+        .then(meds => {
+            const labels = meds.map(m => m.name);
+            const data = meds.map(m => m.adherence);
+
+            new Chart(document.getElementById('adherenceChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Adherence %',
+                        data: data,
+                        backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, max: 100, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        });
+</script>
+{% endblock %}
